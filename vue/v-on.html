@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #box2{
+            background: red;
+            width: 100px;
+            height: 100px;
+        }
+        #box{
+            border: 1px solid #000000;
+            width: 200px;
+            height: 200px;
+        }
+        #scroll{
+            height: 3000px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- <div>
+            事件 
+            <button v-on:click="add">添加</button>
+            <ul>
+                <li v-for="val in arr">{{val}}</li>
+            </ul>
+        </div> -->
+        <input type="text" @keyup.enter="fn">
+        <ul>
+            <li v-for="val in arr">{{val}}</li>
+        </ul>
+        <div id="box" @click="a">
+            <div id="box2" @click.stop="a2">
+
+            </div>
+        </div>
+        <!-- <div id="scroll" @keydown.prevent></div> -->
+        <!-- <img id="scroll" @mousedown.prevent src="../5.jpg"/> -->
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        // document.onkeydown = function(ev){
+        //     ev.preventDefault();
+        // }
+        let vm =new Vue({
+            el:'#app',
+            data:{
+                arr:['20岁'],
+                num:20
+            },
+            methods:{
+                add(){
+                    this.num ++,
+                    this.arr.push(this.num+'岁')
+                },
+                a(){
+                    alert(1);
+                },
+                a2(ev){
+                    alert(2);
+                    // ev.stopPropagation(); 阻止冒泡，等同于@xx.stop
+                },
+                fn(ev){
+                    // if(ev.keyCode === 13){
+                        let {value} = ev.target;
+                        this.arr.push(value);
+                        ev.target.value = '';
+                    // }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>xml数据获取</title>
+</head>
+<body>
+<button id="btn">点击生成</button>
+<ul id="ul"></ul>
+<script type="text/javascript">
+	const btn = document.querySelector('button');
+	const ul = document.querySelector('#ul');
+	btn.onclick= function(){
+		const ajax = new XMLHttpRequest;
+		ajax.open('get','data.xml');
+		ajax.send();
+		ajax.onload = function(){
+			// console.log(ajax.responseText)  //data.xml内容
+			const doc = ajax.responseXML; //转换
+			// console.log(doc);
+			let cent = doc.querySelector('content');
+			const person = cent.children;
+			// console.log(person);
+			let html = '';
+			for(let i = 0;i<person.length;i++){
+				html += `<li>我的名字叫:${person[i].querySelector('name').innerHTML}，
+					年龄是:${person[i].querySelector('age').innerHTML}，
+					性别是:${person[i].querySelector('sex').innerHTML}，
+					我想说:${person[i].querySelector('info').innerHTML}
+				</li>`
+			}
+			ul.innerHTML += html;
+		}
+
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style type="text/css">
+		.ok{
+			border: 1px solid green;
+		}
+		.error{
+			border: 1px solid red;
+		}
+	</style>
+</head>
+<body>
+	用户名：<input type="text" id="user">
+<script type="text/javascript" src="javascripts/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+	/*
+		1.先去访问接口
+		http://localhost/get?user=虫虫
+	*/
+	const user = document.getElementById('user');
+
+	// const ajax = new XMLHttpRequest;
+	/*
+		open（）：3个参数
+		 	第一个参数：请求方式：get/post
+		 	第二个参数：url
+		 	第三个参数：是否异步：默认true，异步 
+	*/
+	// ajax.open('get','/get?user='+this.value,true);
+	// ajax.send();
+	// ajax.onload = function(){
+	// 	console.log(ajax.responseText);
+	// }
+
+	user.onblur = function(){
+		const ajax = new XMLHttpRequest;
+		ajax.open('post','/post',true);
+		ajax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+		ajax.send('user='+this.value);
+		ajax.onload = function(){
+			// console.log(ajax.responseText);
+			let data = JSON.parse(ajax.responseText);//json转对象
+			console.log(data);
+		}
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head id="head">
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    //全局函数去接收数据
+    //数据必须是函数名+括号
+    //当需要数据的时候动态的创建script
+
+    function fn(data){
+        console.log(data);
+    }
+
+    //按需加载数据
+    document.onclick = function(){
+        const oS = document.createElement('script');
+        oS.src = 'http://localhost/jsonp?callback=fn';
+        head.appendChild(oS);
+        // fn([1,2,3,4]);
+    }
+
+</script>
+</body>
+</html>

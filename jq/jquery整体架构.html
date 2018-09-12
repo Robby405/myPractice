@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jquery整体架构</title>
+</head>
+<body>
+<div id="box"></div>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+	//global可能在别的环境下，noGlobal低版本ie下，undefined是可以被修改的，利用了函数参数没传就是undifined的特性
+	/*
+		1.不能new自己，因为会递归
+		2.实例化对象还要能使用myQuery方法
+
+		解决（无new化操作）：
+			不能new自己，就new其他函数
+
+			函数的原型等于myQuery的原型
+			这样可以做到其他函数的实例化对象拥有myquery的实例化对象
+	*/
+	(function(global,factory){
+		factory(global);
+	})(typeof window !== 'undefined'?window:this, function(global,noGlobal){
+			function myQuery(select){
+				return new myQuery.fn.init(select); 
+			}
+			// myQuery.prototype.css = function(){
+			// 	console.log(123);
+			// }
+			myQuery.fn = myQuery.prototype = {
+				constructor:myQuery,
+				css(){
+					console.log(123);
+				}
+			}
+			myQuery.fn.init = function(select){
+				// console.log(this);对象
+				let ele = document.querySelectorAll(select);
+				for(let i = 0;i < ele.length; i++){
+					this[i] = ele[i];
+				}
+			}
+
+			// myQuery.fn = function(select){
+			// 	return document.querySelectorAll(select);
+			// }
+			// myQuery.fn.prototype = myQuery.prototype;
+			myQuery.fn.init.prototype = myQuery.fn;
+			window.$ = myQuery;
+	});
+	
+	let box =$('#box');
+	console.log(box);
+	box.css();
+</script>
+</body>
+</html>

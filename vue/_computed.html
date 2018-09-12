@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>computed</p>
+        <input type="text" :value="msg" @input="change"/>
+        {{listMsg}}
+        <p>v-model</p>
+        <input type="text" v-model="msg"/>
+        {{listMsg}}
+        <input type="checkbox" v-model="onOff">
+        {{onOff}}
+        <hr>
+        小生<input type="checkbox" value="小生" v-model="str">
+        80岁<input type="checkbox" value="80岁" v-model="str">
+        未央<input type="checkbox" value="未央" v-model="str">
+        {{str}}
+        <br>
+        <select v-model="picked">
+            <option>上海</option>
+            <option>北京</option>
+            <option>昆明</option>
+            <option>广州</option>
+        </select>
+        {{picked}}
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data:{
+                msg:'',
+                onOff:false,
+                str:[],
+                picked:[],
+            },
+            methods:{
+                change(ev){
+                    this.msg = ev.target.value;
+                }
+            },
+            computed:{
+                listMsg(){
+                    return this.msg.replace(/\d+/g,'');
+                }
+            }
+        });
+        
+    </script>
+</body>
+</html>

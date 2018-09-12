@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head id="head">
+	<meta charset="utf-8">
+	<title>瀑布流jsonp</title>
+	<style>
+	body{
+		background:skyblue;
+	}
+	*{
+	margin: 0;
+	padding: 0;
+	}
+	.pic{
+	width: 236px;
+	box-shadow:0 1px 3px rgba(0,0,0,.3);
+	overflow:hidden;
+	margin-top:10px;
+	}
+	img{
+	width:236px;
+	border: none;
+	display: block;
+	}
+	ul{
+	list-style: none;
+	position: relative;
+	margin: 0 auto;
+	border:1px solid #000;
+	/* width:1050px; */
+	/* overflow: hidden; */
+	}
+	li{
+	position: absolute;
+	/* border: 1px solid #ccc; */
+	/* float: left; */
+	/* margin: 8px; */
+	width:236px;
+	transition: 500ms;
+	}
+	#loading{
+	height: 50px;
+	position: fixed;
+	bottom:0;
+	background: #fff;
+	width:100%;
+	transition: 500ms;
+	display: none;
+	}
+	#loading img{
+	width:80px;
+	margin: 0 auto;
+	}
+	</style>
+</head>
+<body>
+	 <ul id="ul">
+        <!-- <li>
+          <div class="pic">
+            <img src="http://www.wookmark.com//images//thumbs//669494_wookmark.jpg">
+          </div>
+        </li> -->
+    </ul>
+    <div id="loading">
+      <img height="50" src="1.gif" >
+    </div>
+    <script type="text/javascript" src="jsonp_1.0.js"></script>
+    <script type="text/javascript">
+    	const head = document.getElementById('head');
+    	const loading = document.getElementById('loading');
+		/*
+		1.一屏能放多少个li
+		*/
+		const w = 236; //图片宽度
+		let iW = window.innerWidth;
+		let m = 10; //间距
+		let sjw = w + m; //图片+间距
+		let pageNum = 0;
+		let onOff = true;
+		let allNum = 0;
+
+		let len = Math.floor((iW - m) / ( w + m));
+		//console.log(len);  //一排可放多少张图片 
+		ul.style.width = len * sjw - m + 'px';
+
+		let arrT = []; //left值
+		let arrL = []; //top值
+
+		for(let i = 0 ;i < len; i++){
+			arrL.push(sjw*i);
+			arrT.push(0);
+		}
+
+		//找到最小的索引
+		function minIndex(arr){
+			return arr.findIndex(e=>e==Math.min(...arr));
+		}
+
+		getData(pageNum);
+		function getData(page=0){
+			loading.style.display = 'block';
+			jsonp({
+				url: 'http://www.wookmark.com/api/json/popular',
+				data:{
+					page
+				},
+				success(data){
+					// console.log(data); 请求到的数据
+					if(data.length == 0){
+						loading.style.display = 'none';
+						alert('我也是有底线的！！！');
+						return;
+					}
+					data.forEach(e=>{
+						let li = document.createElement('li');
+						let div = document.createElement('div');
+						div.className = 'pic';
+						let img = document.createElement('img');
+						img.src = e.preview;   
+						img.onload = function(){
+							//如果能够加载就进onload
+							let index = minIndex(arrT); //求最小
+				            li.style.left = arrL[index] + 'px';
+				            li.style.top = arrT[index] + 'px';
+				            li.style.height = img.height + 'px';
+				            div.appendChild(img);
+				            li.appendChild(div);
+				            arrT[index] += img.height + 10;
+				            ul.appendChild(li);
+
+				            allNum ++; //判断是否完成
+				            console.log(data.length);
+				            if(allNum == data.length){//加载完成
+				            	loading.style.display = 'none';
+				            	allNum = 0;
+				            	onOff = true;
+				            }
+					}  
+					img.onerror = function(){
+						allNum++;
+						if(allNum == data.length){
+							loading.style.display = 'none';
+			            	allNum = 0;
+			            	onOff = true;
+						}
+					}
+			    });
+			
+				}
+			})
+		}
+
+		// 滚轮
+		window.onscroll = function(){
+			let bottom = window.pageYOffset + window.innerHeight;
+			//console.log(bottom,arrT[minIndex(arrT)]);最小图片
+			if(bottom >= arrT[minIndex(arrT)]){
+				if(onOff){
+					onOff = false;
+					getData(++pageNum);
+				}
+				
+			}
+		}
+
+		//缩放屏幕
+		window.onresize = function(){
+			iw = window.innerWidth;
+			len = Math.floor((iw-m)/sjw);
+			if(len < 3){
+				len = 3;
+			}else if(len > 8){
+				len = 8;
+			}
+			ul.style.width = len * sjw - m + 'px';
+			arrT.length = arrL.length = 0;
+			for(let i =0 ;i < len;i++){
+				arrL.push(sjw*i);
+				arrT.push(0);
+			}
+			let lis = Array.from(document.getElementsByTagName('li'));
+			lis.forEach(e=>{
+				let index = minIndex(arrT);
+				e.style.left = arrL[index] + 'px';
+				e.style.top = arrT[index] + 'px';
+				arrT[index] += e.offsetHeight + 10;
+
+			})
+		}
+    </script>
+</body>
+</html>

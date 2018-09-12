@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>组件2</title>
+	<style type="text/css">
+		#box{
+			width: 100px;
+			height: 100px;
+			background: red;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	</style>
+</head>
+<body>
+<div id="box"></div>
+<script type="text/javascript">
+	let event = document.createEvent('HTMLEvents');
+	event.initEvent('按下',true,false);
+	let event2 = document.createEvent('HTMLEvents');
+	event2.initEvent('移动',true,false);
+	class Drag{
+		constructor(id){
+			this.box = document.getElementById(id);
+			this.disX = this.disY = 0;
+			this.opt = {
+				downFn(){},
+				moveFn(){},
+				upFn(){}
+			}
+		}
+
+	init(obj){
+		this.opt = Object.assign(this.opt,obj);
+		this.down();
+	}
+
+	down(callbackD,callbackM,callbackU){
+		let that = this;
+		this.box.addEventListener('mousedown',function(ev){
+			document.dispatchEvent(event);
+			that.disX = ev.pageX - this.offsetLeft;
+			that.disY = ev.pageY - this.offsetTop;
+			let move = function(ev){
+				that.move(ev);
+				document.dispatchEvent(event2);
+			}
+			let up = function(ev){
+				that.up(ev,move,up);
+				// document.dispatchEvent('抬起');
+			}
+			document.addEventListener('mousemove',move);
+			document.addEventListener('mouseup',up);
+			ev.preventDefault();
+		});
+	}
+	move(ev){
+
+		this.box.style.left = ev.pageX - this.disX + 'px';
+		this.box.style.top = ev.pageY - this.disY + 'px';
+	}
+	up(ev,m,u){
+		document.removeEventListener('mousemove',m);
+		document.removeEventListener('mousemove',u);
+	}
+}
+let box1 = new Drag('box');
+box1.init();
+
+document.addEventListener('按下',function(){
+	function a(){
+		console.log('A同学');
+	}
+	a();
+});
+
+document.addEventListener('按下',function(){
+	function a(){
+		console.log('B同学');
+	}
+	a();
+});
+
+document.addEventListener('移动',function(){
+	function a(){
+		console.log('我是C');
+	}
+	a();
+});
+</script>
+</body>
+</html>

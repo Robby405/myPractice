@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>继承回顾</title>
+</head>
+<body>
+<script type="text/javascript">
+	function Person(name,age){
+		this.name = name;
+		this.age = age;
+	}
+	Person.prototype.say = function(){
+		alert(this.name);
+	}
+	
+
+	function WebCoder(name,age,job) {
+		Person.call(this,name,age);
+		this.job = job;
+	}
+	WebCoder.prototype.coding = function(){
+		alert('我会敲代码!');
+	}
+	WebCoder.prototype.say = function(){
+		alert('我不但会敲代码还会改bug');
+	}
+	for(let attr in Person.prototype){
+		WebCoder.prototype[attr] = Person.prototype[attr];
+	}
+	let p = new Person('dudu',18);
+	
+	let webcoder = new WebCoder('小时候可瘦了',80,'前端工程师');
+	
+	p.say();
+	webcoder.coding();
+
+	let obj = {
+		name: 'dudu',
+		age: 18
+	}
+	//检测属性
+	Object.defineProperty(obj,'job',{
+		configurable: true,
+		// value: '前端',
+		enumerable: true,
+		// writable: true,
+		get(){
+			return '前端'
+		}
+	})
+	for(let attr in obj){
+		console.log(obj[attr])
+	}
+</script>
+</body>
+</html>

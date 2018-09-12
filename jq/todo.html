@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>todos</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+    <section class="todoapp">
+        <div>
+            <header class="header" >
+                <h1>todos</h1>
+                <input class="new-todo" placeholder="请输入内容" value="">
+            </header>
+            <section class="main">
+                <input class="toggle-all" type="checkbox">
+                <ul class="todo-list">
+                    <!-- <li class="completed">
+                        <div class="view">
+                            <input class="toggle" type="checkbox" checked="">
+                            <label>多多对对对</label>
+                            <button class="destroy"></button>
+                        </div>
+                        <input class="edit" value="多多对对对">
+                    </li> -->
+                </ul>
+            </section>
+            <footer class="footer">
+	            <span class="todo-count">
+	            	<strong id="num">0</strong>
+	            	<span>条未选中</span>
+	            </span>
+            </footer>
+        </div>
+    </section>
+<script src="jquery-3.2.1.min.js"></script>
+<script>
+    /*
+        1.输入内容，敲回车创建li
+        2.勾选
+        3.全选
+        4.删除
+    */
+
+    let $txt = $('.new-todo'),
+        $ul = $('.todo-list'),
+        $all = $('.toggle-all');
+
+    /*
+        ev为二次封装的事件对象,ev.originalEvent:原生event对象
+        on() 上面的事件都是通过on来二次封装的
+        on(事件名,function(){})
+        on(事件名,委托对象,function(){}) 事件委托
+    */
+    $txt.keyup(function(ev){
+        // console.log(ev);
+        if(ev.keyCode === 13){
+            let val = $txt.val().trim();
+            if(val){
+                let $li = $(
+                    `
+                    <li>
+                        <div class="view">
+                            <input class="toggle" type="checkbox">
+                            <label>${val}</label>
+                            <button class="destroy"></button>
+                        </div>
+                        <input class="edit" value="${val}">
+                    </li>
+                    `
+                );
+                //computed
+                $li.on('click','.toggle',function(){
+                    let bool = $(this).prop('checked');
+                    $li.attr('class',bool?'completed':'');
+                    //全选
+                    changeAll();
+                });
+                $li.on('click','.destroy',function(){
+                    $li.remove();
+                });
+                // $li.on('dblclick','label',function(){
+                //     $li.addClass('editing');
+                //     $('input').on('blur',function(){
+                //         let val = $(this).val();
+                //         $li.children().find('label').text(val);
+                //         $li.removeClass('editing');
+                //     });
+                // });     
+
+                $li.on('dblclick','label',function(){
+                   // console.log($(this).closest('li'));
+                   $li.addClass('editing');
+
+                });    
+
+                $li.on('blur','.edit',function(){
+                    let val = $(this).val();
+                    if(!val){
+                        $(this).val($li.find('label').html())
+                    }else{
+                        $(this).html(val);
+                    }
+                    $li.find('label').html($(this).val());
+                    $li.removeClass('editing');
+                })         
+                $ul.append($li);
+                
+                changeAll();
+                $txt.val('');
+                
+                // console.log($li);
+            }else{
+                alert('请输入内容');
+            }
+        }
+    }); 
+
+    $all.click(function(){
+        let checked = $all.prop('checked');
+        $('li').attr('class',checked?'completed':'');
+        $('.toggle').prop('checked',checked);
+        changeAll();
+    });
+    
+    
+    function changeAll(){
+        let checkedLen = $('li[class="completed"]').length;
+        let lisLen = $('li').length;
+        $all.prop('checked',!!lisLen&&checkedLen == lisLen);  
+        $('#num').text(lisLen-checkedLen);     
+    }  
+</script>
+</body>
+</html>

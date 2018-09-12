@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>SDK试验</title>
+	<meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-tap-highlight" content="no">
+</head>
+<body>
+	<div id="id_test_video" style="width:100%; height:auto;"></div>
+	<!-- <script src="//imgcache.qq.com/open/qcloud/video/vcplayer/TcPlayer-2.2.1.js" charset="utf-8"></script> -->
+	<script type="text/javascript" src="Tcplayer.js"></script>
+	<script type="text/javascript">
+		var player =  new TcPlayer('id_test_video', {
+			"m3u8": "http://2157.liveplay.myqcloud.com/2157_358535a.m3u8",
+			"flv": "http://2157.liveplay.myqcloud.com/live/2157_358535a.flv", //增加了一个flv的播放地址，用于PC平台的播放 请替换成实际可用的播放地址
+			"autoplay" : true,      //iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
+			"coverpic" : "http://www.test.com/myimage.jpg",
+			"width" :  '480',//视频的显示宽度，请尽量使用视频分辨率宽度
+			"height" : '320'//视频的显示高度，请尽量使用视频分辨率高度
+		});
+		// (function(){
+	 //        function getParams(name) {
+	 //            var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+	 //            var r = window.location.search.substr(1).match(reg);
+	 //            if (r != null) {
+	 //                return decodeURIComponent(r[2]);
+	 //            }
+	 //            return null;
+	 //        }
+	 //        var rtmp = getParams('rtmp'),
+	 //            flv  = getParams('flv'),
+	 //            m3u8 = getParams('m3u8'),
+	 //            mp4  = getParams('mp4'),
+	 //            live = (getParams('live') == 'true' ? true : false),
+	 //            coverpic = getParams('coverpic'),
+	 //            width = getParams('width'),
+	 //            height = getParams('height'),
+	 //            autoplay = (getParams('autoplay') == 'true' ? true : false);
+	 //        *
+	 //         * 视频类型播放优先级
+	 //         * mobile ：m3u8>mp4
+	 //         * PC ：RTMP>flv>m3u8>mp4
+	         
+	 //        var options = {
+	 //            rtmp: rtmp,
+	 //            flv: flv ,
+	 //            m3u8: m3u8 ,
+	 //            mp4 : mp4 || 'rtmp://192.168.30.212/mypull/test', //
+	 //            coverpic: coverpic ,
+	 //            autoplay: autoplay ? true : false,
+	 //            live: live,
+	 //            width : width || '480',
+	 //            height : height || '320',
+	 //            wording: {
+	 //                2032: '请求视频失败，请检查网络',
+	 //                2048: '请求m3u8文件失败，可能是网络错误或者跨域问题'
+	 //            },
+	 //            listener: function (msg) {
+	 //                //console.log(msg.type);
+	 //            }
+	 //        };
+	 //        var player = new TcPlayer('video-container', options);
+	 //        console.log(player);
+  //   })();
+  	// var arr = [1,2];
+  	// var arr2 = arr.concat();
+  	// console.log(arr.splice(1,0));
+  	// arr2.push(arr.splice(1,0));
+  	// console.log(arr2)
+	</script>
+</body>
+</html>

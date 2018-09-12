@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+    	body{
+    		background:skyblue;
+    	}
+      *{
+        margin: 0;
+        padding: 0;
+      }
+      .pic{
+        width: 236px;
+        box-shadow:0 1px 3px rgba(0,0,0,.3);
+        overflow:hidden;
+        margin-top:10px;
+      }
+      img{
+        width:236px;
+        border: none;
+        display: block;
+      }
+      ul{
+        list-style: none;
+        position: relative;
+        margin: 0 auto;
+        border:1px solid #000;
+        /* width:1050px; */
+        /* overflow: hidden; */
+      }
+      li{
+        position: absolute;
+        /* border: 1px solid #ccc; */
+        /* float: left; */
+        /* margin: 8px; */
+        width:236px;
+        transition: 500ms;
+      }
+      #loading{
+        height: 50px;
+        position: fixed;
+        bottom:0;
+        background: #fff;
+        width:100%;
+        transition: 500ms;
+      }
+      #loading img{
+        width:80px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="ul">
+        
+    </ul>
+    <div id="loading">
+      <img height="50" src="1.gif" >
+    </div>
+
+<script>
+  /*
+    可以通过这个数据拿到50条数据，通过数据来形成瀑布流
+     page=0 
+     page=1
+     callback=fn
+
+     http://www.wookmark.com/api/json/popular?callback=fn
+  */
+</script>
+</body>
+</html>

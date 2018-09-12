@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #box{
+            background: red;
+            width: 100px;
+            height: 100px;
+        }
+        .bor{
+            border: 5px solid black;
+        }
+        .col{
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div v-html="hw">
+            <!-- {{hw}} -->
+        </div>  
+        <div v-text="hw">
+            <!-- {{hw}} -->
+        </div>   
+        <!-- <div id="box" v-bind:class="{bor:onOff}">
+            ssdsdsdsdsds
+        </div> -->
+        <!-- 绑定两个类 -->
+        <!-- <div id="box" :class="[b,c]">
+            ssdsdsdsdsds
+        </div> -->
+        <!-- <div id="box" :style="{fontSize:r}">
+            ssdsdsdsdsds
+        </div> -->
+        <div id="box" v-bind:style="[f,bb,bbb]">
+            ssdsdsdsdsds
+        </div>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        new Vue({
+            el:"#app",
+            data:{
+                hw:'<p>hello,世界!</p>',
+                onOff: true,
+                b:'bor',
+                c:'col',
+                r:  '25px',
+                f:{fontSize:'50px'},
+                bb:{background:'pink'},
+                bbb:{
+                    border:'10px solid black'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

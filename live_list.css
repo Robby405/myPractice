@@ -1,0 +1,51 @@
+hr{
+	margin: 60px 0;
+}
+.list-page{
+	max-width: 1200px;
+	width: 95%;
+	margin: 0 auto; 
+	padding: 10px;
+}
+.nav-tabs li a{
+	padding: 10px 20px;
+}
+.page_one{
+	margin: 50px 0;
+}
+.container{
+	border: 1px solid #ccc;
+}
+.live-list h3,.lecture-list h3{
+	padding-left: 15px;
+}
+.t-img{
+	padding: 10px;
+}
+.t-img img{
+	width: 100%;
+}
+.t-info{
+	padding: 10px 0;
+	margin-left: 20px;
+	line-height: 100%;
+}
+.card-title a{
+	color: #000;
+}
+.card-text{
+	padding-left: 10px;
+	font-size: 15px;
+	color: #666;
+	line-height: 30px;
+}
+.lecture-bar{
+	float: right;
+	margin-top: -5px;
+}
+.lecture-list{
+	margin-top: 30px;
+}
+.lecture-list section{
+	margin-bottom: 25px;
+}

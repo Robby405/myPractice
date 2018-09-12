@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>es6的类</title>
+</head>
+<body>
+<script type="text/javascript">
+	/*class Person{
+		constructor(name,age){
+			this.name = name;
+			this.age = age;
+		}
+		say(){
+			alert(this.name);
+		}
+	}
+	let p1 = new Person('yellow',18);
+	p1.say();
+	console.log(p1);*/
+
+	//继承
+	class Person{
+		constructor(name,age){
+			this.name = name;
+			this.age = age;
+		}
+		say(){
+			alert(this.name);
+		}
+		static say(){
+			alert('dudu');
+		}
+	}
+
+	class Police extends Person{
+		constructor(name,age,job){
+			super();
+			this.name = name;
+			this.age = age;
+			this.job = job;
+		}
+		say(){
+			alert(this.job);
+		}
+		kongfu(){
+			alert('扫堂腿');
+		}
+	}
+	let p1 = new Person('红红',12);
+	let p2 = new Police('月初',16,'特警');
+	p2.say();
+	p2.kongfu();
+	// p1.say();
+</script>
+</body>
+</html>

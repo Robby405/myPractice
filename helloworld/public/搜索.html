@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head id="head">
+	<meta charset="utf-8">
+	<title>搜索</title>
+</head>
+<body>
+	搜索：
+	<input type="text" id="txt">
+	<ul id="list">
+		
+	</ul>
+	<script type="text/javascript">
+		const txt = document.getElementById('txt');
+		const ul = document.getElementById('list');
+
+		function fn2(data){
+			// console.log(data);
+			let html = '';
+			data.s.forEach(e=>{
+				html += '<li>' + e +'</li>';
+			});
+			ul.innerHTML = html;
+		}
+		txt.onkeydown = function(){
+			const oS= document.createElement('script');
+			oS.src = 'http://suggestion.baidu.com/su?wd='+this.value+'&cb=fn2';
+			head.appendChild(oS);
+			oS.remove();
+		}
+		
+	</script>
+</body>
+</html>

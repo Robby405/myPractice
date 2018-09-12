@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head id="head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    搜索：
+    <input type="text" id="txt">
+    <ul id="ul"></ul>
+
+<script>
+    const txt = document.getElementById('txt');
+    const ul = document.getElementById('ul');
+    
+
+    function fn2(data){
+        let html = '';
+        data.s.forEach(e=>{
+            html += '<li>'+ e +'</li>';
+        });
+
+        ul.innerHTML = html;
+
+    }
+
+    // fn2();
+
+    txt.onkeyup = function(){
+        const oS = document.createElement('script');
+        oS.src = 'http://suggestion.baidu.com/su?wd='+this.value+'&cb=fn2';
+        head.appendChild(oS);
+        oS.remove();
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+body{
+    background: skyblue;
+}
+#box{
+    width: 100px;
+    height: 100px;
+    border: 20px solid #000000;
+}
+.activate{
+    background: red;
+}
+
+

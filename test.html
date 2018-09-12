@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>test</title>
+</head>
+<body>
+<script type="text/javascript">
+	var onemsg = document.createElement("div");
+    onemsg.className = "p-talk";
+    var userdiv = document.createElement("div");
+    userdiv.className = "p-info";
+    var username = document.createElement("span");
+    var msgbody = document.createElement("div");
+    msgbody.className = "p-say";
+    var msgPre = document.createElement("pre");
+    userdiv.appendChild(username);
+    onemsg.appendChild(userdiv);
+    onemsg.appendChild(msgbody);
+
+    document.body.appendChild(onemsg);
+</script>
+</body>
+</html>

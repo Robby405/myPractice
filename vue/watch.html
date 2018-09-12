@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" @keyup.13="add" v-model="val">
+        <ul>
+            <li v-for="val in list">
+                <input type="checkbox" v-model="val.checked">{{val.txt}}
+            </li>
+        </ul>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        new Vue({
+            el:"#app",
+            data:{
+                list:JSON.parse(localStorage.getItem('data')) || 
+                [
+                    {
+                        id:0,
+                        txt:'第一条数据',
+                        checked:false
+                    },
+                   
+                ],
+                val:''
+            },
+            methods:{
+                add(){
+                    this.list.push({
+                        txt:this.val,
+                        checked:false
+                    });
+                    // console.log(this.val);
+                    localStorage.setItem('data',JSON.stringify(this.list));
+                    this.val='';
+                    // console.log(this.list);
+                }
+            },
+            watch:{
+                // list:function(){
+                    //浅监听可以是函数
+                    // console.log(1);
+                // },
+                list:{
+                    handler(){
+                        // console.log(1);
+                        localStorage.setItem('data',JSON.stringify(this.list));
+                    },
+                    deep:true
+                } 
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>ajax封装</title>
+</head>
+<body>
+ 用户:<input type="text" id="un"/>
+ <script type="text/javascript">
+ 	var un = document.getElementById('un');
+ 	un.onblur = function(){
+ 		ajax({
+ 			url: '/get',
+ 			// url: 'data.xml',
+ 			data: {
+ 				'user': this.value
+ 			},
+ 			dataType: 'json',
+ 			success:function(data){
+ 				console.log(data);
+ 			},
+ 			error:function(error){
+ 				console.log(error);
+ 			}
+ 		});
+ 	}
+
+ 	function ajax(json){
+		var opt = {
+			url: '',
+			data: {},
+			success: function(){},
+			error: function(){},
+			method: 'get',
+			dataType: 'json'
+		}
+		//有配置走配置，没配置走默认
+		for(var attr in json){
+			opt[attr] = json[attr];
+		}
+		var ajax = new XMLHttpRequest;
+		//转换data
+		var arr = [];
+		for(var attr in opt.data){
+			arr.push(attr+'='+opt.data[attr]);
+		}
+		opt.data = arr.join('&');
+		if(opt.method === 'get'){
+			ajax.open('get',opt.url+'?' + opt.data,true);
+			ajax.send();
+		}else if(opt.method === 'post'){
+			ajax.open('post',url,true);
+			ajax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+			ajax.send(opt.data);
+		}
+		ajax.onreadystatechange = function(){
+			// alert(1);弹3次
+			if(ajax.readyState === 4){
+				// alert(ajax.readyState);
+				if(ajax.status >= 200 && ajax.status <=207 || ajax.status == 304){
+					if(opt.dataType === 'json'){
+						// console.log(ajax.stausText);
+						console.log(ajax.getAllResponseHeaders());
+						opt.success(JSON.parse(ajax.responseText));
+					}else if(opt.dataType === 'xml'){
+						console.log(ajax.statusText);
+						opt.success(ajax.responseXML);
+					}else{
+						opt.success(ajax.responseText);
+					}
+				}else{
+					opt.error({status:ajax.status});
+				}
+			}
+		}
+		// ajax.onload = function(){
+		// 	// console.log(JSON.parse(ajax.responseText));
+		// 	opt.success(JSON.parse(ajax.responseText));
+		// }
+		
+ 	}
+
+ </script>
+</body>
+</html>

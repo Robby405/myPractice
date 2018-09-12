@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>fecth</title>
+</head>
+<body>
+用户：<input type="text" id="un">
+<script type="text/javascript">
+	var un = document.getElementById('un');
+	un.onblur = function(){
+		// fetch('/get?user='+this.value).then((data)=>data.json()).then((data)=>{
+		// 	console.log(data);
+		// });
+		fetch('/post',{
+			method: 'POST',
+			headers: new Headers({
+				'Content-Type':'application/x-www-form-urlencoded'
+			}),
+			body:'user='+this.value
+		})
+		.then((data)=>data.json())
+		.then((data)=>{
+			console.log(data);
+		});
+		
+	}
+	
+</script>
+</body>
+</html>

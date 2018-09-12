@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="str"/>
+        <hr>
+        <list :aaa="str"></list>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        // Vue.component('ppa',{
+        //     template:'<div>我是子组件</div>',
+        //     data(){
+        //         return {
+        //             hw:'hello world'
+        //         }
+        //     }
+        // });
+        // <ul>
+        //     <li>
+        //         <input type="checkbox">
+        //         <p>{{txt}}</>
+        //     </li>
+        // </ul>
+        let obj = {
+            props:['aaa'], //属性
+            template:`              
+                <div>
+                    <p>{{str2}}</p>
+                    <p>{{aaa}}</p>
+                </div>
+            `,
+            data(){
+                return {
+                    str2:"子组件的数据"
+                }
+            }
+        }
+        // Vue.component('pPa',obj); //如果不想写这句话
+        new Vue({
+            el:'#app',
+            data:{
+                arr:[
+                    {checked:false,id:0,txt:'呵呵'}
+                ],
+                str:'父级的数据'
+            },
+            components:{
+                'list':obj
+            }
+        })
+    </script>
+</body>
+</html>

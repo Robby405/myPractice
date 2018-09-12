@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>slot</title>
+	<style type="text/css">
+		.hw{
+			color: red;
+		}
+		.yellow{
+			color: yellow;
+		}
+	</style>
+</head>
+<body>
+<div id="app">
+	<ppa>
+		<h1 class="yellow" slot="hw">hello</h1>
+		<p slot="footer">play</p>
+	</ppa>
+</div>
+<script type="text/javascript" src="vue.js"></script>
+<script type="text/javascript">
+	let ppa = {
+		template:`<div>
+			<div class="hw">
+				<slot name="hw">你好</slot>
+			</div>
+			<div>
+				<slot name="footer">play</div>
+			</div>
+		</div>`
+	}
+	new Vue({
+		el:'#app',
+		components:{
+			'ppa':ppa
+		}
+	})
+</script>
+</body>
+</html>

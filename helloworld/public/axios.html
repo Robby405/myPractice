@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>axios</title>
+</head>
+<body>
+	<input type="text" id="un">
+
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script type="text/javascript">
+		var un = document.getElementById('un');
+		un.onblur = function(){
+			//get方法
+			axios.get('/get',{
+				params:{
+					user: un.value
+				}
+			}).then(function(rep){
+				console.log(rep)
+			})
+
+			//post方法
+			// axios.post('/post',{
+			// 	user: un.value
+			// }).then(function(rep){
+			// 	console.log(rep)
+			// })
+		}
+		
+	</script>
+</body>
+</html>

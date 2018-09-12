@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>敏感词替换</title>
+</head>
+<body>
+<input type="text" id="txt">
+<ul id="ul">
+
+</ul>
+<script type="text/javascript">
+	let str = "中国共产党万岁,法轮功是邪教";
+	let {log}=console;
+
+	// log(str.replace(/共产党|习|法轮功|邪/g,'*'));
+	let s = str.replace(/共产党|习|法轮功|邪/g,function($0,$1,$2){
+		/*  不加return就是undefined
+			默认情况下：
+		 		第一个参数：每次匹配到的字符
+		 		第二参数：索引
+		 		第三个参数：整个字符串
+		 		第四个参数之后：undefined
+		 */
+		let temp = '';
+		for(let i = 0;i < $0.length; i++){
+			temp += '*';
+		}
+		return temp;
+	});
+	log(s);
+
+	let txt = document.getElementById('txt');
+	let ul = document.getElementById('ul');
+
+	let arr = ['呵呵','哈哈','靠','天啊','我不说'];
+	let arr2 = ['%','^','&','$','#','?'];
+
+	txt.onkeyup = function(ev){
+		let val = this.value;
+		if(ev.keyCode === 13){
+			let re = new RegExp(arr.join('|'),'g');
+			val = val.replace(re,function($0){
+				let temp = '';
+				for(let i=0; i<$0.length; i++){
+					temp +=arr2[Math.floor(Math.random()*arr2.length)];
+				}
+				return temp;
+			});
+			console.log(val);
+		}
+	}
+</script>
+</body>
+</html>

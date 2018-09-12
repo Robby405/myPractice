@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p-pa></p-pa>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        // Vue.component('ppa',{
+        //     template:'<div>我是子组件</div>',
+        //     data(){
+        //         return {
+        //             hw:'hello world'
+        //         }
+        //     }
+        // });
+        let obj = {
+            template:`<div>
+                <div>我是子组件{{hw}}</div>
+                <p>我是p标签</p>
+                </div>
+            `,
+            data(){
+                return {
+                    hw:'hello world'
+                }
+            }
+        }
+        Vue.component('pPa',obj);
+        new Vue({
+            el:'#app',
+            data:{}
+        })
+    </script>
+</body>
+</html>

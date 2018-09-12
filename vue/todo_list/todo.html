@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>todos</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+
+<body>
+    <section class="todoapp">
+        <div>
+            <header class="header" >
+                <h1>todos</h1>
+                <input class="new-todo" placeholder="请输入内容" v-model="val" @keyup.13="add">
+                <!-- {{all}} 全选-->
+                <!-- {{val}} -->
+            </header>
+            <section class="main">
+                <input class="toggle-all" type="checkbox" :checked="all" @click="changeAll">
+                <ul class="todo-list">
+                    <li :class="{completed:val.checked}" v-for="(val,key) in changeList"
+                        @dblclick="edit"
+                    >
+                        <div class="view">
+                            <!-- {{val}} -->
+                            <input class="toggle" type="checkbox" v-model="val.checked">
+                            <label>{{val.txt}}</label>
+                            <button class="destroy" @click="dele(val.id)"></button>
+                        </div>
+                        <input class="edit" value="{val.txt}">
+                    </li>
+                </ul>
+            </section>
+            <footer class="footer">
+	            <span class="todo-count">
+	            	<strong id="num">{{num}}</strong>
+	            	<span>条未选中</span>
+                </span>
+                <ul class="filters">
+                    <li v-for="(val,key) in footers">
+                        <a href="javascript:;" :class="{selected:key==index}" @click="index = key">{{val}}</a>
+                    </li>
+                    <!-- <li>
+                        <a href="#">已选中</a>
+                    </li>
+                    <li>
+                        <a href="#">未选中</a>
+                    </li> -->
+                </ul>
+            </footer>
+        </div>
+    </section>
+<script src="../vue.js"></script>
+<script>
+    new Vue({
+        el:'.todoapp',
+        data:{
+           list:[
+               {
+                   id: 0,
+                   txt:"第一条数据",
+                   checked:false
+               }
+           ],
+           val:'',
+           footers:['全部','已选中','未选中'],
+           index:'0',
+        },
+        methods:{
+            add(){
+                //往后加数据
+                /*this.list.push({
+                    id:+new Date,
+                    txt:this.val,
+                    checked:false
+                });*/
+                //往前加数据
+                this.list.unshift({
+                    id:+new Date,
+                    txt:this.val,
+                    checked:false
+                });
+                this.val = '';
+            },
+            changeAll(ev){
+                //全选按钮控制
+                this.list.forEach(e=>e.checked = ev.target.checked);
+                // console.log(ev.target.checked);
+            },
+            dele(id){
+                this.list = this.list.filter(e=> e.id != id);
+            },
+            edit(){
+                console.log(1);
+            }
+        },
+        computed:{
+            all(){
+                return !!this.list.length && this.list.every(e=>e.checked);
+            },
+            num(){
+                return this.list.filter(e=> !e.checked).length;
+            },
+            changeList(){
+                return this.list.filter(e=>{
+                    switch(this.index){
+                        case 0: return e;
+                        case 1: return e.checked;
+                        case 2: return !e.checked;
+                    }
+                })
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

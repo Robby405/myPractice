@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<style>
+#box{
+    width:100px;
+    height: 100px;
+    background: #000;
+    opacity: .2;
+}
+</style>
+</head>
+<body>
+    <div id="box"></div>
+<script type="text/javascript">
+	/*
+		{按下： [fn1,fn2]}
+		d.addEvent('事件名', 事件函数)
+		d.addEvent('事件名2', 事件函数2)
+
+		采集器
+		订阅器
+		触发器
+	*/
+
+	class DD {
+		constructor(){
+			this.opt = {};
+		}
+		add(evName, fn){
+			this.opt[evName] = this.opt[evName] || [];		
+			this.opt[evName].push(fn);
+			// console.log(this.opt[evName]);
+		}
+		trigger(evName){
+			if(!this.opt[evName]) return;
+			this.opt[evName].forEach(e=>{
+				e.call(this);
+			})
+		}
+		remove(evName,fn){
+			this.opt[evName] = this.opt[evName].filter(e=>{
+				return e.name != fn.name;
+			})
+		}
+	}
+
+	let o = new DD;
+	// o.add('按下',function(){
+	// 	alert(1);
+	// });
+	// o.add('按下',fn2);
+	// function fn2(){
+	// 	alert(2);
+	// 	o.remove('按下',fn2);
+	// }
+	let num = .2;
+	o.add('长按',function(){
+		box.style.opacity =num+=0.1;
+	});
+
+	let timer = null;
+	box.onmousedown = function(){
+		let date = new Date;
+		timer = setInterval(function(){
+			if(new Date - date > 1000){
+				o.trigger('长按');
+			}
+		},16.7);
+		box.onmouseup = function(){
+			if(new Date - date < 500){
+				console.log('点击');
+			}
+			clearInterval(timer);
+		}
+	}
+	// document.onmousedown = function(){
+	// 	o.trigger('按下');
+	// }
+</script>
+</body>
+</html>

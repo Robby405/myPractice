@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="str" @keyup.13="add"/>
+        <list :data="arr"></list>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        let obj = {
+            props:['data'],
+            template:`              
+                <ul>
+                    <li v-for="val in data">
+                        <input type="checkbox" :checked="val.checked">
+                        <span>{{val.txt}}</span>
+                    </li>
+                </ul>
+            `,
+            data(){
+                return {
+                    
+                }
+            }
+        }
+
+        new Vue({
+            el:'#app',
+            data:{
+                arr:[
+                    {checked:false,id:0,txt:'呵呵'},
+                    {checked:false,id:1,txt:'哈哈'}
+                ],
+                str:''
+            },
+            methods:{
+                add(){
+                    this.arr.push({
+                        id:+new Date,
+                        txt: this.str,
+                        checked:false
+                    });
+                    this.str='';
+                }
+            },
+            components:{
+                'list':obj
+            }
+        })
+    </script>
+</body>
+</html>

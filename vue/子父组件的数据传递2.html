@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        {{num}}
+        <list @changenum="add" :num1="num" ></list>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+     let obj = {
+            props:['num1'],
+            template:`              
+                <button @click="add">按钮{{num}}</button>
+            `,
+            data(){
+                return {
+                    num: this.num1
+                }
+            },
+            methods:{
+                add(){
+                   this.num ++
+                    this.$emit('changenum',this.num);
+                }
+            },
+        }
+
+        new Vue({
+            el:'#app',
+            data:{
+                num:0    
+            },     
+            methods:{
+                add(newNum){
+                    this.num = newNum;
+                } 
+            },  
+            components:{
+                'list':obj
+            }
+        })
+    </script>
+</body>
+</html>

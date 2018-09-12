@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>面向对象</title>
+</head>
+<body>
+<script type="text/javascript">
+	// Person.prototype.say = function() {
+	// 	alert(this.name);
+	// };
+	// let p1 = new Person('东方月初',16);
+	// p1.say = function(){
+	// 	alert('哈哈');
+	// }
+	// p1.say();
+	// console.dir(p1);
+
+	// Person.say = function(){
+	// 	alert('Person的say');
+	// }
+
+	function Person(name,age) {
+		this.name = name;
+		this.age = age;
+	}
+	Person.say = function(){
+		alert('Person的say');
+	}
+	Object.prototype.say = function(){
+		alert('Object原型的say');
+	}
+	Function.prototype.say = function(){
+		alert('Function原型的say');
+	}	
+	// Function.say = function(){
+	// 	alert('Function的say');
+	// }
+	Person.prototype.say = function() {
+		alert(this.name);
+	};
+	let p = new Person('月初',16);
+	// p.say();
+	//p.say -> p._proto_ ->Person.prototype
+	// Person.say();
+	Function.say();
+</script>
+</body>
+</html>

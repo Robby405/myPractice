@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>组件2</title>
+	<style type="text/css">
+		#box{
+			width: 100px;
+			height: 100px;
+			background: red;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	</style>
+</head>
+<body>
+<div id="box"></div>
+<script type="text/javascript">
+	class Drag{
+		constructor(id){
+			this.box = document.getElementById(id);
+			this.disX = this.disY = 0;
+			this.opt = {
+				downFn(){},
+				moveFn(){},
+				upFn(){}
+			}
+		}
+
+	init(obj){
+		//有配置走配置，没配置走默认
+		this.opt = Object.assign(this.opt,obj);
+		// console.log(this.opt.downFn,this.opt.moveFn);
+		this.down();
+	}
+
+	down(callbackD,callbackM,callbackU){
+		let that = this;
+		this.box.addEventListener('mousedown',function(ev){
+			that.opt.downFn();
+			that.disX = ev.pageX - this.offsetLeft;
+			that.disY = ev.pageY - this.offsetTop;
+			let move = function(ev){
+				that.move(ev);
+				that.opt.moveFn();
+			}
+			let up = function(ev){
+				that.up(ev,move,up);
+				that.opt.upFn();
+			}
+			document.addEventListener('mousemove',move);
+			document.addEventListener('mouseup',up);
+			ev.preventDefault();
+		});
+	}
+	move(ev){
+
+		this.box.style.left = ev.pageX - this.disX + 'px';
+		this.box.style.top = ev.pageY - this.disY + 'px';
+	}
+	up(ev,m,u){
+		document.removeEventListener('mousemove',m);
+		document.removeEventListener('mousemove',u);
+	}
+}
+let box1 = new Drag('box');
+box1.init({
+	moveFn(){
+		console.log('我要move');
+	},
+	upFn(){
+		console.log('我要up');
+	}
+}
+);
+</script>
+</body>
+</html>

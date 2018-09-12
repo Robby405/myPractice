@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+</head>
+<body>
+    <!-- <h1>首页</h1>
+    <div>123456</div> -->
+    <input type="text" id="user">
+    <ul>
+        {% for key in data %}
+            <li>{{key}}</li>
+        {% endfor %}
+    </ul>
+        
+    <script src="../view/jquery.min.js" type="text/javascript" language="javascript"></script>
+    <script>
+        $('#user').blur(function(){
+            $.ajax({
+            // url:'/post',
+            url: '/user/username',
+            type:'post',
+            // url: '/user/users',
+            // type:'get',
+            data:$('#user').val(),
+            success(data){
+                console.log(data);
+            }
+        })
+        })
+        
+    </script>
+</body>
+</html>

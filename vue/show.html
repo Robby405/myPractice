@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #box{
+            background: red;
+            width: 100px;
+            height: 100px;
+        }
+        #box{
+            background: blue;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- v-show -->
+        <!-- <div id="box" v-show="b"></div> -->
+        <!-- v-if -->
+        <!-- <div id="box" v-if="b"></div>
+        <div id="box2" v-else></div> -->
+        <!-- v-for -->
+        <div>
+            <ul>
+                <li v-for="val in arr">{{val}}</li>
+                <li v-for="val,key in arr">{{val}}{{key}}</li>
+                <li v-for="val,key in obj">{{val}}-{{key}}</li>
+            </ul>
+        </div>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        let vm =new Vue({
+            el:'#app',
+            data:{
+                b:true,
+                // arr:['小树','小花','小美','小草','哈哈'],
+                arr:[],
+                obj:{
+                    name:'xq',
+                    age:18,
+                    hob:'web'
+                }
+            }
+        });
+        setTimeout(()=>{
+            vm.arr = ['小树','小花','小美','小草','哈哈']
+        },3000);
+    </script>
+</body>
+</html>

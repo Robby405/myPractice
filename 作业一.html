@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>作业一</title>
+</head>
+<body>
+<div id="box"></div>
+<script type="text/javascript">
+	let str = '我是<span>{{name}}</span>,年龄<span>{{age}},性别<span>{{sex}}</span>';
+	let obj = {
+		name: '虫虫',
+		age: 18,
+		sex: '妹纸'
+	}
+	let s = str.replace(/\{{2}([a-z]+)\}{2}/g,function ($0,$1) {
+		// console.log($1);
+		// console.log($0);
+		return obj[$1];
+	});
+	const box = document.getElementById('box');
+	box.innerHTML = s;
+	// console.log(s);
+
+	str2 = '  12  345';
+	console.log(str2.replace(/^\s+|\s+$/g,''));
+
+	function sum(){
+		let nub = arguments[0];
+		for(let i = 1; i < arguments.length; i++){
+			nub -= arguments[i];
+		}
+		alert(nub);
+	}	
+	sum(10,2,3,4);
+
+</script>
+</body>
+</html>

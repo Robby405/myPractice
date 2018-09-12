@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>拷贝</title>
+</head>
+<body>
+<script type="text/javascript">
+	//Object.assign()
+	//浅拷贝
+	let arr =[1,2,3];
+	let arr0 = [-1,0];
+	let arr2 = Object.assign([],arr,arr0);
+	arr2.push(4);
+	console.log(arr);
+
+	let a =[1,2,3,[4]];
+	let a2 = Object.assign([],a);
+	a2[3].push(5);
+	console.log(a2);
+
+	//深拷贝
+	let b = [1, 2, 3, [4, {name: '小水晶'}]];
+	// let b2 = Object.assign([], b);
+	function deepClone(obj){
+		let o = obj.push?[]:{};
+		for( let attr in obj){
+			if(typeof obj[attr] === 'object'){
+				o[attr] = deepClone(obj[attr]);
+			}else{
+				o[attr] = obj[attr];
+			}
+		}
+		return o;
+	}
+	let b2 = deepClone(b);
+	b2[3][1].name = '虫虫';
+	
+	console.log(b);
+</script>
+</body>
+</html>

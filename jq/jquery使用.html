@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jquery使用</title>
+</head>
+<body>
+<input type="text" id="txt" value="aaaa">
+<div id="box"></div>
+<button id="btn1">点击全选</button>
+<button id="btn2">点击反选</button>
+<input type="checkbox">
+<input type="checkbox">
+<script type="text/javascript" src = "jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+	// $(document).click(function(){
+	// 	console.log($('#txt').val());
+	// 	$('#box').text('<p>我是p标签</p>');
+	// 	// $('#box').html('<p>我是p标签</p>');
+
+	// 	$('#box').attr('index',1);
+	// 	console.log($('#box')[0].index);
+	// })
+	$('#btn1').click(function(){
+		$(':checkbox').attr('checked',true);
+	});
+	$('#btn2').click(function(){
+		// console.log($(':checkbox').eq(0).attr('checked'));  //undefined
+		//console.log($(':checkbox').eq(0).prop('checked')); //当前状态
+		$(':checkbox').each(function(i,ele){
+			// console.log(ele); 原生
+			if($(ele).prop('checked')){
+				$(ele).prop('checked',false);
+			}else{
+				$(ele).prop('checked',true);
+			}
+		});
+	});
+</script>
+</body>
+</html>

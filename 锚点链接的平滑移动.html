@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>锚点平滑移动</title>
+	<style type="text/css">
+		div{
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			margin-top: 20px;
+		}
+	</style>
+</head>
+<body>
+<a href="#content">锚点跳转</a>
+<a href="#two">锚点跳转</a>
+<a href="#three">锚点跳转</a>
+<a href="#four">锚点跳转</a>
+<a href="#five">锚点跳转</a>
+<div style="margin-top: 500px;"></div>
+<div id="content">1</div>
+<div id="two">2</div>
+<div id="three">3</div>
+<div id="four">4</div>
+<div id="five">5</div>
+<script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+	// $('#turnToContent').click(function(){
+	// 	$('html,body').animate({
+	// 		scrollTop: $($.attr(this,'href')).offset.top
+	// 	},500);
+	// 	return false;
+	// });
+$(function(){  
+  $('a[href*=#],area[href*=#]').click(function() {
+    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+      var $target = $(this.hash);
+      $target = $target.length && $target || $('[name=' + this.hash.slice(1) + ']');
+      if ($target.length) {
+        var targetOffset = $target.offset().top;
+        $('html,body').animate({
+          scrollTop: targetOffset
+        },
+        1000);
+        return false;
+      }
+    }
+  });
+})
+</script>
+</body>
+</html>

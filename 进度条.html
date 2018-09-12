@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>进度条</title>
+	<style type="text/css">
+		  /*支持IE9及以上*/
+    .circle-bar { font-size:200px; width: 1em; height: 1em; position: relative;  background-color: #333; }
+    .circle-bar-left,.circle-bar-right { width: 1em; height: 1em; background-color: #eee; }
+    /*
+        这里采用clip剪切了圆，实现左右两个半圆，右半圆在后面，因此在更上一层，
+        clip的用法参考：http://www.w3school.com.cn/cssref/pr_pos_clip.asp
+     */
+    .circle-bar-right { clip:rect(0,auto,auto,.5em); }
+    .circle-bar-left { clip:rect(0,.5em,auto,0); }
+    
+    .mask { width: 0.8em; height: 0.8em;  background-color: #fff;text-align: center;line-height: 0.2em; color:rgba(0,0,0,0.5); }
+    .mask :first-child { font-size: 0.3em; height: 0.8em; line-height: 0.8em; display: block;  }
+    /*所有的后代都水平垂直居中，这样就是同心圆了*/
+    .circle-bar * {  position: absolute; top:0; right:0; bottom:0; left:0; margin:auto; }
+    /*自身以及子元素都是圆*/
+    .circle-bar, .circle-bar > * { border-radius: 50%; }
+    
+	</style>
+</head>
+<body>
+	<div class="circle-bar">
+    <div class="circle-bar-left"></div>
+    <div class="circle-bar-right"></div>
+    <!-- 遮罩层，显示百分比 -->
+    <div class="mask">
+        <span class="percent">60%</span>
+    </div>
+</div>
+<script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+	 $(function(){
+
+        var percent = parseInt($('.mask :first-child').text());
+        var baseColor = $('.circle-bar').css('background-color');
+
+        if( percent<=50 ){
+            $('.circle-bar-right').css('transform','rotate('+(percent*3.6)+'deg)');
+        }else {
+            $('.circle-bar-right').css({
+                'transform':'rotate(0deg)',
+                'background-color':baseColor
+            });
+            $('.circle-bar-left').css('transform','rotate('+((percent-50)*3.6)+'deg)');
+        }
+    })
+</script>
+</body>
+</html>

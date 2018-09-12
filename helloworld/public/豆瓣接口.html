@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>豆瓣接口</title>
+</head>
+<body>
+
+<script type="text/javascript" src="jsonp_1.0.js"></script>
+<script type="text/javascript">
+	jsonp({
+		url: 'https://api.douban.com/v2/book/search',
+		data:{
+			q:'javascript',
+			count: 30
+		},
+		success(data){
+			console.log(data);
+		}
+	})
+</script>
+</body>
+</html>

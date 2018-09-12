@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    #box{
+        width: 100px;
+        height: 100px;
+        background: red;
+    }
+    </style>
+</head>
+<body>
+    <!-- <div id="box"></div> -->
+    用户名：<input id="user" type="text"/>
+    <!--<script>
+        //get请求
+        user.onblur = function(){
+            fetch('/get?name='+this.value)
+            .then((data)=>data.json())
+            .then((data)=>{
+                console.log(data);
+            })
+        }
+    </script> -->
+
+    <script>
+        //post请求
+        user.onblur = function(){
+            const ajax = new XMLHttpRequest;
+            ajax.open('post','/post1');
+            ajax.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+            ajax.send('name='+this.value);
+            ajax.onload = function(data){
+                console.log(ajax.responseText);
+            }
+        }
+    </script>
+</body>
+</html>

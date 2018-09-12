@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>选项卡——面向对象</title>
+	<style type="text/css">
+		.active{
+			background: yellow;
+		}
+		div{
+			width: 150px;
+			height: 80px;
+			border: 1px solid black;
+			display: none;
+			margin: 5px;
+		}
+		.show{
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<section id="box">
+		<button class="active">按钮一</button>
+		<button>按钮一</button>
+		<button>按钮一</button>
+		<div class="show">111111111</div>
+		<div>222222222</div>
+		<div>333333333</div>
+	</section>
+<script type="text/javascript">
+	function Tab(id) {
+		this.box = document.getElementById(id);
+		this.btns = this.box.getElementsByTagName('button');
+		this.divs = this.box.getElementsByTagName('div');
+	}
+
+	Tab.prototype.events = function(eventName){
+		let that = this;
+		for(let i = 0;i < this.btns.length;i++){
+			this.btns[i][eventName] = function(){
+				//this为点谁是谁，btn中没有change方法,只有tab有
+				// alert(i);
+				// this.change();
+				// alert(this);
+				that.change(i);
+			}
+		}
+	}
+
+	Tab.prototype.change = function(index){
+		for(let i = 0;i <this.btns.length;i++){
+			this.btns[i].className = '';
+			this.divs[i].className = '';
+		}
+		this.btns[index].className = 'active';
+		this.divs[index].className = 'show';
+	}
+	
+	let t = new Tab('box');
+	t.events('onclick');
+</script>
+</body>
+</html>

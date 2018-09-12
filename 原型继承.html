@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>拖拽——原型继承</title>
+	<style type="text/css">
+		#box{
+			width: 100px;
+			height: 100px;
+			background: red;
+			border: 1px solid black;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		#box2{
+			width: 100px;
+			height: 100px;
+			background: green;
+			border: 1px solid black;
+			position: absolute;
+			left: 100px;
+			top: 0;
+		}
+	</style>
+</head>
+<body>
+<div id="box"></div>
+<div id="box2"></div>
+<script type="text/javascript">
+	/*原型继承：{
+		方法继承
+		属性继承
+	}*/
+	function Drag(id){
+		this.box = document.getElementById(id);
+		this.disX = 0;
+		this.disY = 0;
+	}
+	Drag.prototype.down = function(){
+		let that = this;
+		this.box.onmousedown = function(ev){
+			that.disX = ev.pageX - this.offsetLeft;
+			that.disY = ev.pageY - this.offsetTop;
+			document.onmousemove = function(ev){
+				that.move(ev);
+			}
+			document.onmouseup = function(ev){
+				that.up(ev);
+			}
+			return false;
+			ev.preventDefault();	
+		}	
+	}
+	Drag.prototype.move = function(ev){
+		this.box.style.left = ev.pageX - this.disX + 'px';
+		this.box.style.top = ev.pageY - this.disY + 'px'; 
+	}
+
+	Drag.prototype.up = function(ev){
+		document.onmousemove = document.onmouseup = null;
+	}
+
+	function Drag2(id){
+		Drag.call(this,id);
+	}
+
+	function Paohui(){}
+	Paohui.prototype = Drag.prototype;
+
+	let ph = new Paohui;
+	Drag2.prototype = ph;
+
+	Drag2.prototype.move = function(ev){
+		let l = ev.pageX - this.disX;
+		let t = ev.pageY - this.disY;
+		if(l < 0){
+			l = 0;
+		}
+		if(t < 0){
+			t = 0;
+		}
+		this.box.style.left = l + 'px';
+		this.box.style.top = t + 'px'; 
+	}
+	Drag2.prototype.constructor = Drag2;
+	let box1 = new Drag('box');
+	box1.down();
+
+	let box2 = new Drag2('box2');
+	box2.down();
+</script>
+</body>
+</html>

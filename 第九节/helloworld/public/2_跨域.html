@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="un">
+<script>
+    /*
+        在请求数据的时候如果出现
+            Access-Control-Allow-Origin 就跨域
+
+        解决跨域:
+            1.高版本的XMLHttpRequest + 服务器端设置请求头
+                Access-Control-Allow-Origin
+            2.服务器代理
+                http://localhost/daili
+            3.jsonp
+                jsonp -> json + padding (数据内填充)
+
+    */
+    const un = document.getElementById('un');
+    un.onblur = function(){
+        const ajax = new XMLHttpRequest;
+        // ajax.open('get','http://localhost:8080/kuayu?name='+this.value);
+        // ajax.open('get','http://www.baidu.com'); //跨域
+        ajax.open('get','/daili')
+        ajax.send();
+        ajax.onload = function(){
+           document.write(ajax.responseText)
+        }
+    }
+</script>
+</body>
+</html>
